@@ -22,7 +22,7 @@ var chai = require('chai')
 var qq = function(str) {
   if (dialect === 'postgres' || dialect === 'mssql') {
     return '"' + str + '"';
-  } else if (Support.dialectIsMySQL() || dialect === 'sqlite') {
+  } else if (dialect === 'mysql' || dialect === 'sqlite') {
     return '`' + str + '`';
   } else {
     return str;
@@ -346,7 +346,7 @@ describe(Support.getTestDialectTeaser('Sequelize'), function() {
       });
     });
 
-    if (Support.dialectIsMySQL()) {
+    if (dialect === 'mysql') {
       it('executes stored procedures', function() {
         var self = this;
         return self.sequelize.query(this.insertQuery).then(function() {
@@ -874,7 +874,7 @@ describe(Support.getTestDialectTeaser('Sequelize'), function() {
     });
   });
 
-  if (Support.dialectIsMySQL()) {
+  if (dialect === 'mysql') {
     describe('set', function() {
       it("should return an promised error if transaction isn't defined", function() {
         expect(function() {
